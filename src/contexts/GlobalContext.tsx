@@ -1,9 +1,57 @@
-import React from 'react'
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useState, useEffect, createContext } from "react";
 
-type Props = {}
+import { isSignedIn, setAllCookies, getAllCookies, getCookie } from "../utils/helper";
 
-const GlobalContext = (props: Props) => {
+export const GlobalContext = createContext({ user: null } as any);
+// const { Provider } = authContext;
+
+// Provider hook that creates an auth object and handles it's state
+const GlobalContextProvider: any = ({ children }: any) => {
+  const [user, setUser] = useState<any>(null);
+
+  const signIn = (email?: string, password?: string) => {
+    const cookieEmail = getCookie("email");
+    const cookiePassword = getCookie("password");
+    console.log("cookieEmail", cookieEmail);
+    console.log("cookiePassword", cookiePassword);
+    if (email && password) {
+      setAllCookies({ email, password });
+      setUser({ email, password });
+    }
+  };
+
+  const getUserDetails = () => {
+    const user = getAllCookies();
+    setUser(user);
+  };
+
+  const storeAllCookies = (cookies: any) => {
+    setAllCookies(cookies);
+    getUserDetails();
+  };
+
+  const signOut = () => {
+    setUser(null);
+    return { success: true };
+  };
+
+  useEffect(() => {
+    if (isSignedIn()) {
+      getUserDetails();
+    }
+  }, []);
+
   return (
-    <div>GlobalContext</div>
-  )
-}
+    <GlobalContext.Provider value={{ user, signIn, signOut, storeAllCookies }}>
+      {children}
+    </GlobalContext.Provider>
+  );
+};
+
+export default GlobalContextProvider;
+
+// export function AuthProvider(props: { children: ReactNode }): JSX.Element {
+//   const [user, setUser] = useState(null);
+//   return <Provider value={{ user, setUser }}>{props.children}</Provider>;
+// }
