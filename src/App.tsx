@@ -3,7 +3,6 @@ import './App.css';
 import Index from './modules/user/Index';
 import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom';
 import Tasks from './modules/tasks/Tasks';
-import AuthContext from './modules/UserContext';
 
 
 function App() {
