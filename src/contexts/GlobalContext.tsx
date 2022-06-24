@@ -43,6 +43,24 @@ const GlobalContextProvider: any = ({ children }: any) => {
     getUserDetails();
   };
 
+  const saveTasks = (tasks: any) => {
+    setAllCookies({ tasks });
+  };
+
+  const saveMeetings = (meetings: any) => {
+    setAllCookies({ meetings });
+  };
+
+  const getAllTasks = () => {
+    const tasks = getCookie("tasks");
+    return tasks;
+  };
+
+  const getAllMeetings = () => {
+    const meetings = getCookie("meetings");
+    return meetings;
+  };
+
   const signOut = () => {
     setUser(null);
     return { success: true };
@@ -55,7 +73,18 @@ const GlobalContextProvider: any = ({ children }: any) => {
   }, []);
 
   return (
-    <GlobalContext.Provider value={{ user, signIn, signOut, storeAllCookies }}>
+    <GlobalContext.Provider
+      value={{
+        user,
+        signIn,
+        signOut,
+        storeAllCookies,
+        saveTasks,
+        saveMeetings,
+        getAllMeetings,
+        getAllTasks,
+      }}
+    >
       {children}
     </GlobalContext.Provider>
   );
