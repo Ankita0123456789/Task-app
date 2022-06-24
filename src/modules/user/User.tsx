@@ -1,8 +1,9 @@
-import React, { useContext } from "react";
-import { useState } from "react";
+import React, { useContext, useState } from "react";
+import { Container, Row, Col, Form } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+
 import Buttons from "../../components/Button";
 import INput from "../../components/Input";
-import { Container, Row, Col, Form } from "react-bootstrap";
 
 import { GlobalContext } from "../../contexts/GlobalContext";
 
@@ -16,16 +17,20 @@ const Index = (props: Props) => {
     email: "",
     password: "",
   });
-
+  const navigate = useNavigate();
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setState({ ...state, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    console.log(state.email, state.password);
     try {
-      signIn(state.email, state.password);
+      const signin = await signIn(state.email, state.password);
+      if (signin.success) {
+        navigate("/tasks");
+      } else {
+        alert(signin.message);
+      }
     } catch (error) {
       console.log(error);
     }

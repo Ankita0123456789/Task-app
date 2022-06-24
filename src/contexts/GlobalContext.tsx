@@ -1,7 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect, createContext } from "react";
 
-import { isSignedIn, setAllCookies, getAllCookies, getCookie } from "../utils/helper";
+import {
+  isSignedIn,
+  setAllCookies,
+  getAllCookies,
+  getCookie,
+} from "../utils/helper";
 
 export const GlobalContext = createContext({ user: null } as any);
 // const { Provider } = authContext;
@@ -13,12 +18,19 @@ const GlobalContextProvider: any = ({ children }: any) => {
   const signIn = (email?: string, password?: string) => {
     const cookieEmail = getCookie("email");
     const cookiePassword = getCookie("password");
-    console.log("cookieEmail", cookieEmail);
-    console.log("cookiePassword", cookiePassword);
+
     if (email && password) {
+      if (email === cookieEmail) {
+        if (password === cookiePassword) {
+          return { success: true, message: "User already signed in" };
+        }
+        return { success: false, message: "Wrong password" };
+      }
       setAllCookies({ email, password });
       setUser({ email, password });
+      return { success: true, message: "User signed in" };
     }
+    return { success: false };
   };
 
   const getUserDetails = () => {
