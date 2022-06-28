@@ -7,8 +7,6 @@ import INput from "../../components/Input";
 
 import { GlobalContext } from "../../contexts/GlobalContext";
 
-import "../user/style.css";
-
 type Props = {};
 
 const Index = (props: Props) => {
@@ -36,6 +34,7 @@ const Index = (props: Props) => {
     }
   };
   console.log("user", user);
+  
   return (
     <Container>
       <Row className="d-flex align-items-center justify-content-center mt-5">
@@ -46,6 +45,7 @@ const Index = (props: Props) => {
               LabelName="E-mail Address"
               name="email"
               type="email"
+              id="username"
               value={state.email}
               onChange={handleChange}
             />

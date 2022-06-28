@@ -8,19 +8,22 @@ type Props = {
   value?: any;
   onChange?: any;
   name: string;
+  id?: any;
+  defaultValue?: any;
 };
 
-const INput = ({ LabelName, type, value, onChange, name }: Props) => {
+const INput = ({ LabelName, type, defaultValue,value, onChange, name, id }: Props) => {
   return (
     <>
       <FloatingLabel
-        controlId="floatingInput"
+        controlId={id}
         label={LabelName}
         className="mb-3"
       >
         <Form.Control
           name={name}
           type={type}
+          defaultValue={defaultValue}
           value={value}
           onChange={onChange}
           placeholder="name@example.com"

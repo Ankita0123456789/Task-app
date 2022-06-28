@@ -1,25 +1,52 @@
-import React from "react";
-import Buttons from "../../components/Button";
-import INput from "../../components/Input";
-import { Container, Row, Col, Form } from "react-bootstrap";
+import { useState } from 'react'
+import { Buttons, INput } from '../../components/index'
+import { Col, Form } from 'react-bootstrap'
 
-type Props = {};
+type Props = {}
+
+const getTasks=()=>{
+  const data = localStorage.getItem('tasks');
+  if(data){
+    return JSON.parse(data);
+  }
+  else{
+    return []
+  }
+}
 
 const TaskForm = (props: Props) => {
-  return (
-    <Container>
-      <Row className="d-flex align-items-center justify-content-center mt-5">
-        <Col className="border p-3 py-5 mt-5" xs={12} md={8} lg={5}>
-          <Form>
-            <h3 className="mb-5">Add Tasks</h3>
-            <INput LabelName="E-mail Address" type="email" name="email" />
-            <INput LabelName="Password" type="password" name="password" />
-            <Buttons type="submit" name="Login" />
-          </Form>
-        </Col>
-      </Row>
-    </Container>
-  );
-};
+  const [tasks, setTasks] = useState(getTasks())
+  const [state, setState] = useState({
+    title: "",
+    description: "",
+    date: "",
+    status: ""
+  });
 
-export default TaskForm;
+  
+    const handleSubmit = (e:React.ChangeEvent<HTMLInputElement>) =>{
+        e.preventDefault();
+        setTasks({
+          ...tasks, state 
+        })
+    }
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setState({ ...state, [e.target.title]: e.target.value });
+  };
+
+  return (
+    <Col className='text-center border p-3 py-5' xs={12} md={8} lg={4}>
+      <Form>
+        <h3 className='mb-5'>Add Tasks</h3>
+        <INput name='title' value={state.title} onChange={handleChange} LabelName='Title' type='text' />
+        <INput name='description' value={state.description} onChange={handleChange} LabelName='Description' type='text' />
+        <INput name='date' value={state.date} onChange={handleChange} LabelName='Date' type='date' />
+        <INput name='status' value={state.status} onChange={handleChange} LabelName='Status' type='text' />
+        <Buttons type="submit" name="Add Tasks" onClick={handleSubmit} />
+      </Form>
+    </Col>
+  )
+}
+
+export default TaskForm

@@ -19,35 +19,36 @@ export const statuses = [
   export const rooms = [
     {
       id: 1,
-      name: 'room1',
+      name: 'Room1',
       label: 'Mercury',
       bookings: ['20/06/2022'],
     },
     {
       id: 2,
-      name: 'room2',
+      name: 'Room2',
       label: 'Venus',
       bookings: ['20/06/2022'],
     },
     {
       id: 3,
-      name: 'room3',
+      name: 'Room3',
       label: 'Earth',
       bookings: ['20/06/2022'],
     },
     {
       id: 4,
-      name: 'room4',
+      name: 'Room4',
       label: 'Mars',
       bookings: ['20/06/2022'],
     },
     {
       id: 5,
-      name: 'room5',
+      name: 'Room5',
       label: 'Jupiter',
       bookings: ['20/06/2022'],
     },
   ];
+
 export const tasks=[
     {
       id: 1,
@@ -63,6 +64,16 @@ export const tasks=[
         dueDate: "25/06/2022",
         status: "open",
       },
+  ]
+export const meetings=[
+    {
+      id: 1,
+      title: "1st Meeting",
+      description: "Get Together",
+      dueDate: "29/06/2022",
+      status: "Available",
+      meetingRoom: "Room1",
+    },
   ]
 export const userObject = {
     user: {

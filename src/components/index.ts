@@ -2,11 +2,13 @@ import Buttons from "./Button";
 import INput from "./Input";
 import Select from "./Select";
 import DatePicker from "./DatePicker";
+import Sidebar from "./Sidebar";
 
 
-export default {
+export {
     Buttons,
     INput,
     Select,
-    DatePicker
+    DatePicker,
+    Sidebar
 }
