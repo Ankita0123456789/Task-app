@@ -14,7 +14,7 @@ const getRooms=()=>{
     return[]
   }
 }
-const MRoomForm = (props: Props) => {
+const RoomForm = (props: Props) => {
   
     const [rooms, setRooms] = useState(()=>getRooms())
     const [state, setState] = useState({
@@ -62,20 +62,7 @@ const MRoomForm = (props: Props) => {
         </Col>
           <Col className='border p-3 py-5' xs={12} md={8} lg={6}>
             <h3 className='text-center mb-5'>List of Meeting Rooms</h3>
-                  <Table bordered hover>
-                    <thead>
-                    <tr>
-                      <th>Sr. No.</th>
-                      <th>Room No.</th>
-                      <th>Room Name</th>
-                      <th>Date</th>
-                      <th>Available</th>
-                    </tr>
-                    </thead>
-                  <tbody>
-                  <Rooms rooms={rooms} deleteRooms={deleteroom} />                  
-                  </tbody>
-                </Table>
+            <Rooms rooms={rooms} deleteRooms={deleteroom} />   
           </Col>
   
         </Row>
@@ -84,4 +71,4 @@ const MRoomForm = (props: Props) => {
     )
 }
 
-export default MRoomForm
+export default RoomForm
