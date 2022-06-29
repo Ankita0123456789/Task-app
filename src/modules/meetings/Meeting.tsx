@@ -1,46 +1,97 @@
-import React, {useState, useEffect} from 'react'
-import { useParams } from 'react-router-dom'
-import { Form,Container, Row, Col, Table } from 'react-bootstrap'
-import { Buttons, INput, Sidebar } from '../../components/index'
-import { MeetingIF } from './interfaces'
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { Form, Container, Row, Col } from "react-bootstrap";
 
-type Props = {}
+import { Buttons, INput, Sidebar } from "../../components/index";
+
+import { meetingInit } from "./defaultValues";
+
+type Props = {};
 
 const Meeting = (props: Props) => {
-  const {id} = useParams();
+  const params: any = useParams();
+  const { id } = params;
+  const [state, setState] = useState(JSON.parse(JSON.stringify(meetingInit)));
+  const [isNew, setIsNew] = useState(false);
 
-  const [state, setState] = useState<MeetingIF[]>([]);
+  useEffect(() => {
+    const meetings: any = JSON.parse(
+      localStorage.getItem("meetings") as string
+    );
 
-  useEffect(()=>{
-      const meeting:any = () => {
-        const data = JSON.parse(localStorage.getItem('meetings') as string)?.filter((m:any) => m.id === Number(id))
-        setState(data);
-      }
-      meeting();
-      
-  }, [id])
-  console.log(state)
+    const data = meetings?.find((m: any) => m.id === Number(id)) ?? [];
+
+    if (data) {
+      setState(data);
+    } else {
+      setIsNew(true);
+      setState({
+        id,
+        title: "",
+        description: "",
+        date: "",
+        status: "",
+      });
+    }
+  }, [id]);
+
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setState({ ...state, [name]: value });
+  };
+
+  const handleSubmit = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    const meetings = JSON.parse(localStorage.getItem("meetings") as string);
+    meetings.push(state);
+    localStorage.setItem("meetings", JSON.stringify(meetings));
+    setState(JSON.parse(JSON.stringify(meetingInit)));
+  };
 
   return (
-    <div>
-      {
-      state.map((meet:any)=>
-      <Container  key={meet.id}>
-        <Row className="d-flex justify-content-around mt-5">
-        <Col className='text-center border p-3 py-5' xs={12} md={8} lg={4}>
-        <Form>
-        <INput  value={meet.title} name='name' LabelName='Name' type='text' />
-        <INput  value={meet.description} name='name' LabelName='Name' type='text' />
-        <INput  value={meet.date} name='name' LabelName='Name' type='text' />
-        <INput  value={meet.status} name='name' LabelName='Name' type='text' />
-        <Buttons type="submit" name="Update" />
-        </Form>
+    <Container>
+      <Sidebar />
+      <Row className="d-flex justify-content-around mt-5">
+        <Col className="text-center border p-3 py-5" xs={12} md={8} lg={4}>
+          <Form>
+            <INput
+              value={state.title}
+              name="name"
+              LabelName="Title"
+              type="text"
+              onChange={onChange}
+            />
+            <INput
+              value={state.description}
+              name="description"
+              LabelName="Description"
+              type="text"
+              onChange={onChange}
+            />
+            <INput
+              value={state.date}
+              name="date"
+              LabelName="Date"
+              type="date"
+              onChange={onChange}
+            />
+            <INput
+              value={state.status}
+              name="status"
+              LabelName="Status"
+              type="text"
+              onChange={onChange}
+            />
+            <Buttons
+              type="submit"
+              name={isNew ? "Add New Meeting" : "Update Meeting"}
+              onClick={handleSubmit}
+            />
+          </Form>
         </Col>
-        </Row>
-      </Container>
-      )}
-    </div>
-  )
-}
+      </Row>
+    </Container>
+  );
+};
 
-export default Meeting
+export default Meeting;
