@@ -1,7 +1,6 @@
-import React from 'react'
+import React from "react";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
-
 
 type Props = {
   LabelName: string;
@@ -9,23 +8,25 @@ type Props = {
   onChange?: any;
   name: string;
   id?: any;
-}
+  options: { name: string; value: string }[];
+};
 
-const Select = ({LabelName,value, onChange, name, id}: Props) => {
+const Select = ({ LabelName, value, onChange, name, id, options }: Props) => {
   return (
-    <FloatingLabel
-    controlId={id}
-    label={LabelName}
-    className="mb-3"
-  >
-    <Form.Select onChange={onChange} aria-label="Default select example">
-    <option>Set Status</option>
-    <option value={value}>{name}</option>
-    <option value={value}>{name}</option>
-    <option value={value}>{name}</option>
-  </Form.Select>
-  </FloatingLabel>
-  )
-}
+    <FloatingLabel controlId={id} label={LabelName} className="mb-3">
+      <Form.Select
+        onChange={onChange}
+        aria-label="Default select example"
+        name={name}
+      >
+        {options.map((option: any) => (
+          <option key={option.value} value={option.value}>
+            {option.name}
+          </option>
+        ))}
+      </Form.Select>
+    </FloatingLabel>
+  );
+};
 
-export default Select
+export default Select;

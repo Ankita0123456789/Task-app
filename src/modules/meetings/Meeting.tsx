@@ -3,10 +3,9 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import { Form, Container, Row, Col } from "react-bootstrap";
 
-
 import { Buttons, INput, Sidebar, Select } from "../../components/index";
 
-import { meetingInit } from "./defaultValues";
+import { meetingInit, statuses } from "./defaultValues";
 
 type Props = {};
 
@@ -26,8 +25,7 @@ const Meeting = (props: Props) => {
 
     if (data) {
       setState(data);
-    }
-     else {
+    } else {
       setIsNew(true);
       setState({
         id,
@@ -46,13 +44,22 @@ const Meeting = (props: Props) => {
 
   const handleSubmit = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    const meetings = isNew? JSON.parse(localStorage.getItem("meetings") as string) : JSON.parse(localStorage.getItem("meetings") as string).filter((meet:any)=> meet.id !== Number(id));
+    const meetings = isNew
+      ? JSON.parse(localStorage.getItem("meetings") as string)
+      : JSON.parse(localStorage.getItem("meetings") as string).filter(
+          (meet: any) => meet.id !== Number(id)
+        );
     meetings.push(state);
     localStorage.setItem("meetings", JSON.stringify(meetings));
     setState(JSON.parse(JSON.stringify(meetingInit)));
-    navigate('/meetings')
+    navigate("/meetings");
   };
 
+  const validated = () =>
+    state.title.length > 0 &&
+    state.description.length > 0 &&
+    state.date.length > 0 &&
+    state.status.length > 0;
 
   return (
     <Container fluid>
@@ -81,10 +88,12 @@ const Meeting = (props: Props) => {
               type="date"
               onChange={onChange}
             />
-           <Select 
-           LabelName="Status" 
-           value={state.status} 
-           name="status" />
+            <Select
+              LabelName="Status"
+              value={state.status}
+              name="status"
+              options={statuses}
+            />
             <INput
               value={state.status}
               name="status"
@@ -94,8 +103,9 @@ const Meeting = (props: Props) => {
             />
             <Buttons
               type="submit"
-              name={ isNew ? "Add New Meeting" : "Update Meeting"}
+              name={isNew ? "Add New Meeting" : "Update Meeting"}
               onClick={handleSubmit}
+              disabled={!validated()}
             />
           </Form>
         </Col>

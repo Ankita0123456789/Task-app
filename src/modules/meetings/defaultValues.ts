@@ -7,3 +7,18 @@ export const meetingInit: MeetingIF = {
   date: "",
   status: "",
 };
+
+export const statuses = [
+  {
+    name: "Open",
+    value: "open",
+  },
+  {
+    name: "Closed",
+    value: "closed",
+  },
+  {
+    name: "Started",
+    value: "started",
+  },
+];

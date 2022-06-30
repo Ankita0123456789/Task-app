@@ -1,16 +1,24 @@
-import React from 'react'
-import Button from 'react-bootstrap/Button';
+import React from "react";
+import Button from "react-bootstrap/Button";
 
-type Props = { name: string, type: any, onClick?: any }
+type Props = { name: string; type: any; onClick?: any; disabled: boolean };
 
-function Buttons({ name, type, onClick }: Props) {
-    return (
-        <>
-            <div className='pt-2 text-center'>
-                <Button className='px-4' type={type} onClick={onClick} variant="primary">{name}</Button>{' '}
-            </div>
-        </>
-    )
+function Buttons({ name, type, onClick, disabled }: Props) {
+  return (
+    <>
+      <div className="pt-2 text-center">
+        <Button
+          className="px-4"
+          type={type}
+          onClick={onClick}
+          variant="primary"
+          disabled={disabled}
+        >
+          {name}
+        </Button>{" "}
+      </div>
+    </>
+  );
 }
 
-export default Buttons
+export default Buttons;
