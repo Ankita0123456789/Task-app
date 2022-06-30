@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+
 import { Form, Container, Row, Col } from "react-bootstrap";
 
-import { Buttons, INput, Sidebar } from "../../components/index";
+
+import { Buttons, INput, Sidebar, Select } from "../../components/index";
 
 import { meetingInit } from "./defaultValues";
 
 type Props = {};
 
 const Meeting = (props: Props) => {
+  const navigate = useNavigate();
   const params: any = useParams();
   const { id } = params;
   const [state, setState] = useState(JSON.parse(JSON.stringify(meetingInit)));
@@ -19,18 +22,19 @@ const Meeting = (props: Props) => {
       localStorage.getItem("meetings") as string
     );
 
-    const data = meetings?.find((m: any) => m.id === Number(id)) ?? [];
+    const data = meetings?.find((m: any) => m.id === Number(id));
 
     if (data) {
       setState(data);
-    } else {
+    }
+     else {
       setIsNew(true);
       setState({
         id,
         title: "",
         description: "",
         date: "",
-        status: "",
+        status: [],
       });
     }
   }, [id]);
@@ -42,21 +46,23 @@ const Meeting = (props: Props) => {
 
   const handleSubmit = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    const meetings = JSON.parse(localStorage.getItem("meetings") as string);
+    const meetings = isNew? JSON.parse(localStorage.getItem("meetings") as string) : JSON.parse(localStorage.getItem("meetings") as string).filter((meet:any)=> meet.id !== Number(id));
     meetings.push(state);
     localStorage.setItem("meetings", JSON.stringify(meetings));
     setState(JSON.parse(JSON.stringify(meetingInit)));
+    navigate('/meetings')
   };
 
+
   return (
-    <Container>
+    <Container fluid>
       <Sidebar />
-      <Row className="d-flex justify-content-around mt-5">
+      <Row className="d-flex justify-content-center mt-5">
         <Col className="text-center border p-3 py-5" xs={12} md={8} lg={4}>
           <Form>
             <INput
               value={state.title}
-              name="name"
+              name="title"
               LabelName="Title"
               type="text"
               onChange={onChange}
@@ -75,6 +81,10 @@ const Meeting = (props: Props) => {
               type="date"
               onChange={onChange}
             />
+           <Select 
+           LabelName="Status" 
+           value={state.status} 
+           name="status" />
             <INput
               value={state.status}
               name="status"
@@ -84,7 +94,7 @@ const Meeting = (props: Props) => {
             />
             <Buttons
               type="submit"
-              name={isNew ? "Add New Meeting" : "Update Meeting"}
+              name={ isNew ? "Add New Meeting" : "Update Meeting"}
               onClick={handleSubmit}
             />
           </Form>

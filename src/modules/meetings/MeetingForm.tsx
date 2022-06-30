@@ -18,31 +18,12 @@ const getMeetings = () => {
 };
 const MeetingForm = (props: Props) => {
   const [meetings, setMeetings] = useState(getMeetings());
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [date, setDate] = useState("");
-  const [status, setStatus] = useState("");
+  const [isEdit, setIsEdit] = useState(null)
 
-  const handleSubmit = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    let meeting = {
-      id: Number,
-      title,
-      description,
-      date,
-      status,
-    };
-    setMeetings([...meetings, meeting]);
 
-    setTitle("");
-    setDescription("");
-    setDate("");
-    setStatus("");
-  };
-
-  const deleteMeeting = (title: any) => {
+  const deleteMeeting = (id: any) => {
     const filterMeetings = meetings.filter((element: any, index: any) => {
-      return element.title !== title;
+      return element.id !== id;
     });
     setMeetings(filterMeetings);
   };
@@ -51,61 +32,28 @@ const MeetingForm = (props: Props) => {
     localStorage.setItem("meetings", JSON.stringify(meetings));
   }, [meetings]);
 
+  const editMeeting = (id:any) =>{
+    let newEditMeeting = meetings.find((elem:any) => {
+       return elem.id === id
+    });
+    console.log(newEditMeeting);
+    setIsEdit(id)
+  }
   return (
     <Container fluid>
       <Sidebar />
-      <Row className="text-center">
-        <Link
+      <Row className="text-center justify-content-center">
+      <div className="col-2">
+        <Link className="btn btn-outline-primary me-2"
           to={`/meeting/${
             meetings.length > 0 ? meetings[meetings.length - 1]?.id + 1 : 1
           }`}
         >
           Add New
         </Link>
+        </div>
       </Row>
-      <Row className="justify-content-around mt-5">
-        <Col className="text-center border p-3 py-5" xs={12} md={8} lg={4}>
-          <Form>
-            <h3 className="mb-5">Add Meetings</h3>
-            <INput
-              value={title}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setTitle(e.target.value)
-              }
-              name="title"
-              LabelName="Title"
-              type="text"
-            />
-            <INput
-              value={description}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setDescription(e.target.value)
-              }
-              name="description"
-              LabelName="Description"
-              type="text"
-            />
-            <INput
-              value={date}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setDate(e.target.value)
-              }
-              name="date"
-              LabelName="Date"
-              type="date"
-            />
-            <INput
-              value={status}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setStatus(e.target.value)
-              }
-              name="status"
-              LabelName="Status"
-              type="text"
-            />
-            <Buttons type="submit" name="Add Meetings" onClick={handleSubmit} />
-          </Form>
-        </Col>
+      <Row className="justify-content-center mt-5">
         <Col className="border p-3 py-5" xs={12} md={8} lg={6}>
           <h3 className="text-center mb-5">List of Meetings</h3>
           <Table bordered hover>
@@ -119,7 +67,7 @@ const MeetingForm = (props: Props) => {
               </tr>
             </thead>
             <tbody>
-              <Meetings meets={meetings} deleteMeeting={deleteMeeting} />
+              <Meetings meets={meetings} editMeeting={editMeeting} deleteMeeting={deleteMeeting} />
             </tbody>
           </Table>
         </Col>

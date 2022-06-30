@@ -38,9 +38,9 @@ const RoomForm = (props: Props) => {
       setState({ ...state, [e.target.name]: e.target.value });  
     };
 
-    const deleteroom=(title:any)=>{
+    const deleteroom=(id:any)=>{
       const filterrooms = rooms.filter((element:any, index:any)=>{
-        return element.title !== title
+        return element.id !== id
       }) 
       setRooms(filterrooms)
     }

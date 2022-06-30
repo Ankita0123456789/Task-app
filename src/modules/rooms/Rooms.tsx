@@ -26,7 +26,7 @@ const Rooms = ({rooms, deleteRooms}: Props):JSX.Element => {
       </thead>
     <tbody>
     <tr>
-      <td>{room.id = Index + 1}</td>      
+      <td>{room.id = (Index+1)}</td>      
       <td>{room.name}</td>
       <td>{room.room}</td>
       <td>{room.date}</td>
