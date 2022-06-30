@@ -32,13 +32,14 @@ const Meeting = (props: Props) => {
         title: "",
         description: "",
         date: "",
-        status: [],
+        status: "",
       });
     }
   }, [id]);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+    console.log(name, value)
     setState({ ...state, [name]: value });
   };
 
@@ -55,11 +56,10 @@ const Meeting = (props: Props) => {
     navigate("/meetings");
   };
 
-  const validated = () =>
-    state.title.length > 0 &&
-    state.description.length > 0 &&
-    state.date.length > 0 &&
-    state.status.length > 0;
+  // const validated = () =>
+  //   state.title.length > 0 &&
+  //   state.description.length > 0 &&
+  //   state.date.length > 0 &&
 
   return (
     <Container fluid>
@@ -93,19 +93,20 @@ const Meeting = (props: Props) => {
               value={state.status}
               name="status"
               options={statuses}
+              onChange={onChange}
             />
-            <INput
+            {/* <INput
               value={state.status}
               name="status"
               LabelName="Status"
               type="text"
               onChange={onChange}
-            />
+            /> */}
             <Buttons
               type="submit"
               name={isNew ? "Add New Meeting" : "Update Meeting"}
               onClick={handleSubmit}
-              disabled={!validated()}
+              // disabled={!validated()}
             />
           </Form>
         </Col>

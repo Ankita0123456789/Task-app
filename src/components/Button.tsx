@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "react-bootstrap/Button";
 
-type Props = { name: string; type: any; onClick?: any; disabled: boolean };
+type Props = { name: string; type: any; onClick?: any; disabled?: boolean };
 
 function Buttons({ name, type, onClick, disabled }: Props) {
   return (
