@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {Offcanvas} from 'react-bootstrap';
 import * as Icon from 'react-bootstrap-icons';
 import { NavLink } from 'react-router-dom';
@@ -7,20 +7,20 @@ import "./style.css"
 type Props = {}
 
 const Sidebar = (props:Props) =>  {
-  const [show, setShow] = useState(false);
+  // const [show, setShow] = useState(false);
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  // const handleClose = () => setShow(false);
+  // const handleShow = () => setShow(true);
 
   return (
     <>
     <div className='arrow-right'>
-    <Icon.ChevronDoubleRight type='button'  onClick={handleShow} />
+    <Icon.ChevronDoubleRight type='button' />
     </div>
      
      <div className='sidenav'>
-      <Offcanvas show={show} onHide={handleClose}>
-        <Offcanvas.Header closeButton>
+      <Offcanvas show={true}>
+        <Offcanvas.Header>
           <Offcanvas.Title>Menu</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
