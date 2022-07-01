@@ -1,9 +1,7 @@
 import { NavLink } from "react-router-dom";
 import "./style.css";
 
-type Props = {};
-
-const Sidebar = (props: Props) => {
+const Sidebar = () => {
   return (
     <>
       <div className="sidenav pt-5 ps-5">

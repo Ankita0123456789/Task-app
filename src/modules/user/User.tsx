@@ -10,7 +10,7 @@ import { GlobalContext } from "../../contexts/GlobalContext";
 type Props = {};
 
 const Index = (props: Props) => {
-  const { user, signIn } = useContext(GlobalContext);
+  const { signIn } = useContext(GlobalContext);
   const [state, setState] = useState({
     email: "",
     password: "",
@@ -30,11 +30,10 @@ const Index = (props: Props) => {
         alert(signin.message);
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
-  console.log("user", user);
-  
+
   return (
     <Container>
       <Row className="d-flex align-items-center justify-content-center mt-5">

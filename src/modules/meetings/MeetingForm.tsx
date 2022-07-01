@@ -39,7 +39,6 @@ const MeetingForm = (props: Props) => {
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    console.log(name, value);
     setState({ ...state, [name]: value });
   };
 
@@ -58,12 +57,12 @@ const MeetingForm = (props: Props) => {
 
   const validated = () => {
     if (
-      state.title.length > 0 &&
-      state.title.length <= 14 &&
-      state.description.length > 0 &&
-      state.description.length <= 60 &&
-      state.date &&
-      state.status
+      state?.title?.length > 0 &&
+      state?.title?.length <= 14 &&
+      state?.description?.length > 0 &&
+      state?.description?.length <= 60 &&
+      state?.date &&
+      state?.status
     ) {
       return true;
     }

@@ -17,8 +17,8 @@ const getTasks = () => {
 const Task = (props: Props) => {
   const [tasks, setTasks] = useState(getTasks());
 
-  const deleteTasks = (id: any) => {
-    const filterTasks = tasks.filter((element: any, index: any) => {
+  const deleteTasks = (id: number) => {
+    const filterTasks = tasks.filter((element: any, index: number) => {
       return element.id !== id;
     });
     setTasks(filterTasks);

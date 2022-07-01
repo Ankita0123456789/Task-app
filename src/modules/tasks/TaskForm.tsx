@@ -7,9 +7,7 @@ import { Buttons, INput, Sidebar, Select } from "../../components/index";
 
 import { TasksInit, statuses } from "./defaultValues";
 
-type Props = {};
-
-const TaskForm = (props: Props) => {
+const TaskForm = () => {
   const navigate = useNavigate();
   const params: any = useParams();
   const { id } = params;
@@ -38,7 +36,6 @@ const TaskForm = (props: Props) => {
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    console.log(name, value);
     setState({ ...state, [name]: value });
   };
 
