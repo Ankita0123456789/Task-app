@@ -5,23 +5,23 @@ import { Form, Container, Row, Col } from "react-bootstrap";
 
 import { Buttons, INput, Sidebar, Select } from "../../components/index";
 
-import { TasksInit, statuses } from "./defaultValues";
+import { meetingInit, statuses } from "./defaultValues";
 
 type Props = {};
 
-const TaskForm = (props: Props) => {
+const MeetingForm = (props: Props) => {
   const navigate = useNavigate();
   const params: any = useParams();
   const { id } = params;
-  const [state, setState] = useState(JSON.parse(JSON.stringify(TasksInit)));
+  const [state, setState] = useState(JSON.parse(JSON.stringify(meetingInit)));
   const [isNew, setIsNew] = useState(false);
 
   useEffect(() => {
-    const tasks: any = JSON.parse(
-      localStorage.getItem("tasks") as string
+    const meetings: any = JSON.parse(
+      localStorage.getItem("meetings") as string
     );
 
-    const data = tasks?.find((m: any) => m.id === Number(id));
+    const data = meetings?.find((m: any) => m.id === Number(id));
 
     if (data) {
       setState(data);
@@ -45,15 +45,15 @@ const TaskForm = (props: Props) => {
 
   const handleSubmit = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    const tasks = isNew
-      ? JSON.parse(localStorage.getItem("tasks") as string)
-      : JSON.parse(localStorage.getItem("tasks") as string).filter(
-          (task: any) => task.id !== Number(id)
+    const meetings = isNew
+      ? JSON.parse(localStorage.getItem("meetings") as string)
+      : JSON.parse(localStorage.getItem("meetings") as string).filter(
+          (meet: any) => meet.id !== Number(id)
         );
-    tasks.push(state);
-    localStorage.setItem("tasks", JSON.stringify(tasks));
-    setState(JSON.parse(JSON.stringify(TasksInit)));
-    navigate("/tasks");
+    meetings.push(state);
+    localStorage.setItem("meetings", JSON.stringify(meetings));
+    setState(JSON.parse(JSON.stringify(meetingInit)));
+    navigate("/meetings");
   };
 
   const validated = () =>{
@@ -77,7 +77,7 @@ const TaskForm = (props: Props) => {
           <Row className="justify-content-center">
             <Col xs={12} md={8} lg={7}>
               <div className="mb-5">
-                {isNew ? <h2>Add New Task</h2> : <h2>Update Tasks</h2>}
+                {isNew ? <h2>Add New Meeting</h2> : <h2>Update Meeting</h2>}
               </div>
               <Form>
                 <INput
@@ -110,7 +110,7 @@ const TaskForm = (props: Props) => {
                 />
                 <Buttons
                   type="submit"
-                  name={isNew ? "Add New Task" : "Update Task"}
+                  name={isNew ? "Add New Meeting" : "Update Meeting"}
                   onClick={handleSubmit}
                   disabled={!validated()}
                 />
@@ -123,4 +123,4 @@ const TaskForm = (props: Props) => {
   );
 };
 
-export default TaskForm;
+export default MeetingForm;

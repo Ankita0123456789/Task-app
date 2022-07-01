@@ -1,53 +1,37 @@
-import React from 'react'
-import { Container, Row, Col, Table } from "react-bootstrap"
-import { Sidebar } from '../../components';
-import { RoomForm } from '../index'
+import { Sidebar } from "../../components/index";
+import { Container, Row, Col } from "react-bootstrap";
+import { rooms } from "../../utils/defaultValues";
+import "../../modules/style.css";
 
-import * as Icon from 'react-bootstrap-icons';
+type Props = {};
 
-type Props = {rooms?: any[], deleteRooms?: any}
+const Rooms = (props: Props) => {
+  return (
+    <Container fluid>
+      <Row>
+        <Col xs={12} md={3} lg={3}>
+          <Sidebar />
+        </Col>
 
-const Rooms = ({rooms, deleteRooms}: Props):JSX.Element => {
-    if(!rooms || rooms.length===0){
-      return <span>No data</span>
-    }
-    return (
-      <>
-      {rooms?.map((room:any, Index: any) =>(
-      <Table  key={room.id} bordered hover>
-      <thead>
-      <tr>
-        <th>Sr. No.</th>
-        <th>Room No.</th>
-        <th>Room Name</th>
-        <th>Date</th>
-        <th>Available</th>
-      </tr>
-      </thead>
-    <tbody>
-    <tr>
-      <td>{room.id = (Index+1)}</td>      
-      <td>{room.name}</td>
-      <td>{room.room}</td>
-      <td>{room.date}</td>
-      <td>{room.avail}</td>
-      <td className="delete-btn" onClick={()=>deleteRooms(room.title)}>
-<Icon.TrashFill/>
-</td>
-{/* <td>
-<NavLink to={`/meeting/${meeting.id}`} className="btn btn-outline-dark me-2">
-         Edit
-</NavLink>
-</td> */}
-</tr>        
-    </tbody>
-  </Table>
-    )
-  )
-  }
-      </>
-      )
-   
-}
+        <Col className="p-3 py-5" xs={12} md={8} lg={9}>
+          <Row className="justify-content-center">
+            <h3 className="text-center mb-5">Meeting Rooms</h3>
+            <Container className="meetingrooms d-flex">
+              {rooms.map((room: any) => {
+                return (
+                  <Col className="border text-center m-3 p-3" lg={3}>
+                    <p>{room.name}</p>
+                    <h5 className="pb-2">{room.label}</h5>
+                    <p>{room.bookings}</p>
+                  </Col>
+                );
+              })}
+            </Container>
+          </Row>
+        </Col>
+      </Row>
+    </Container>
+  );
+};
 
-export default Rooms
+export default Rooms;

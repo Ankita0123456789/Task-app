@@ -1,10 +1,10 @@
-import { MeetingIF } from "./interfaces";
+import { TasksIF } from "./interfaces";
 
-export const meetingInit: MeetingIF = {
+export const TasksInit: TasksIF = {
   id: null,
   title: "",
   description: "",
-  date: "",
+  duedate: "",
   status: "",
 };
 
@@ -22,7 +22,12 @@ export const statuses = [
     value: "Closed",
   },
   {
-    name: "Started",
-    value: "Started",
+    name: "Working",
+    value: "Working",
   },
+  {
+    name: "Pending",
+    value: "Pending",
+  },
+
 ];

@@ -8,10 +8,10 @@ type Props = {
   onChange?: any;
   name: string;
   id?: any;
-  options: { name: string; value: string }[];
+  options: { name: string }[];
 };
 
-const Select = ({ LabelName, value, onChange, name, id, options }: Props) => {
+const Select = ({ LabelName, onChange, name, id, options }: Props) => {
   return (
     <FloatingLabel controlId={id} label={LabelName} className="mb-3">
       <Form.Select

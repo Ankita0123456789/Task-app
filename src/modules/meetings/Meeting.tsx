@@ -1,118 +1,77 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-
-import { Form, Container, Row, Col } from "react-bootstrap";
-
-import { Buttons, INput, Sidebar, Select } from "../../components/index";
-
-import { meetingInit, statuses } from "./defaultValues";
+import { useEffect, useState } from "react";
+import { Container, Row, Col, Table } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import { Sidebar } from "../../components/index";
+import { Meetings } from "../index";
 
 type Props = {};
 
-const Meeting = (props: Props) => {
-  const navigate = useNavigate();
-  const params: any = useParams();
-  const { id } = params;
-  const [state, setState] = useState(JSON.parse(JSON.stringify(meetingInit)));
-  const [isNew, setIsNew] = useState(false);
+const getMeetings = () => {
+  const data = localStorage.getItem("meetings");
+  if (data) {
+    return JSON.parse(data);
+  } else {
+    return [];
+  }
+};
+const MeetingForm = (props: Props) => {
+  const [meetings, setMeetings] = useState(getMeetings());
+
+  const deleteMeeting = (id: any) => {
+    const filterMeetings = meetings.filter((element: any, index: any) => {
+      return element.id !== id;
+    });
+    setMeetings(filterMeetings);
+  };
 
   useEffect(() => {
-    const meetings: any = JSON.parse(
-      localStorage.getItem("meetings") as string
-    );
-
-    const data = meetings?.find((m: any) => m.id === Number(id));
-
-    if (data) {
-      setState(data);
-    } else {
-      setIsNew(true);
-      setState({
-        id,
-        title: "",
-        description: "",
-        date: "",
-        status: "",
-      });
-    }
-  }, [id]);
-
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    console.log(name, value)
-    setState({ ...state, [name]: value });
-  };
-
-  const handleSubmit = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    const meetings = isNew
-      ? JSON.parse(localStorage.getItem("meetings") as string)
-      : JSON.parse(localStorage.getItem("meetings") as string).filter(
-          (meet: any) => meet.id !== Number(id)
-        );
-    meetings.push(state);
     localStorage.setItem("meetings", JSON.stringify(meetings));
-    setState(JSON.parse(JSON.stringify(meetingInit)));
-    navigate("/meetings");
-  };
-
-  // const validated = () =>
-  //   state.title.length > 0 &&
-  //   state.description.length > 0 &&
-  //   state.date.length > 0 &&
+  }, [meetings]);
 
   return (
     <Container fluid>
-      <Sidebar />
-      <Row className="d-flex justify-content-center mt-5">
-        <Col className="text-center border p-3 py-5" xs={12} md={8} lg={4}>
-          <Form>
-            <INput
-              value={state.title}
-              name="title"
-              LabelName="Title"
-              type="text"
-              onChange={onChange}
-            />
-            <INput
-              value={state.description}
-              name="description"
-              LabelName="Description"
-              type="text"
-              onChange={onChange}
-            />
-            <INput
-              value={state.date}
-              name="date"
-              LabelName="Date"
-              type="date"
-              onChange={onChange}
-            />
-            <Select
-              LabelName="Status"
-              value={state.status}
-              name="status"
-              options={statuses}
-              onChange={onChange}
-            />
-            {/* <INput
-              value={state.status}
-              name="status"
-              LabelName="Status"
-              type="text"
-              onChange={onChange}
-            /> */}
-            <Buttons
-              type="submit"
-              name={isNew ? "Add New Meeting" : "Update Meeting"}
-              onClick={handleSubmit}
-              // disabled={!validated()}
-            />
-          </Form>
+      <Row>
+        <Col xs={12} md={3} lg={3}>
+          <Sidebar />
+        </Col>
+        <Col className="p-3 py-5" xs={12} md={8} lg={9}>
+          <Row className="justify-content-center">
+            <div className="text-center">
+              <Link
+                className="btn btn-outline-primary px-5 me-2"
+                to={`/meeting/${
+                  meetings.length > 0
+                    ? meetings[meetings.length - 1]?.id + 1
+                    : 1
+                }`}
+              >
+                Add New Meeting
+              </Link>
+            </div>
+            <div className="mt-5">
+              <h3 className="text-center mb-5">List of Meetings</h3>
+              <Table bordered hover className="text-center">
+                <thead >
+                  <tr>
+                    <th>Sr. No.</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Delete</th>
+                    <th>Edit</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <Meetings meets={meetings} deleteMeeting={deleteMeeting} />
+                </tbody>
+              </Table>
+            </div>
+          </Row>
         </Col>
       </Row>
     </Container>
   );
 };
 
-export default Meeting;
+export default MeetingForm;
