@@ -9,7 +9,7 @@ const Rooms = (props: Props) => {
   return (
     <Container fluid>
       <Row>
-        <Col xs={12} md={3} lg={3}>
+        <Col xs={12} md={4} lg={3}>
           <Sidebar />
         </Col>
 

@@ -13,15 +13,14 @@ const TaskForm = (props: Props) => {
   const navigate = useNavigate();
   const params: any = useParams();
   const { id } = params;
+
   const [state, setState] = useState(JSON.parse(JSON.stringify(TasksInit)));
   const [isNew, setIsNew] = useState(false);
 
   useEffect(() => {
-    const tasks: any = JSON.parse(
-      localStorage.getItem("tasks") as string
-    );
+    const tasks: any = JSON.parse(localStorage.getItem("tasks") as string);
 
-    const data = tasks?.find((m: any) => m.id === Number(id));
+    const data = tasks?.find((t: any) => t.id === Number(id));
 
     if (data) {
       setState(data);
@@ -31,7 +30,7 @@ const TaskForm = (props: Props) => {
         id,
         title: "",
         description: "",
-        date: "",
+        duedate: "",
         status: "",
       });
     }
@@ -56,16 +55,18 @@ const TaskForm = (props: Props) => {
     navigate("/tasks");
   };
 
-  const validated = () =>{
-    if (state.title.length > 0 && 
-    state.title.length <= 14 &&
-    state.description.length > 0 && 
-    state.description.length <= 60&&
-    state.date&&
-    state.status){
-      return true
+  const validated = () => {
+    if (
+      state.title.length > 0 &&
+      state.title.length <= 14 &&
+      state.description.length > 0 &&
+      state.description.length <= 60 &&
+      state.duedate &&
+      state.status
+    ) {
+      return true;
     }
-  }
+  };
 
   return (
     <Container fluid>
@@ -77,7 +78,7 @@ const TaskForm = (props: Props) => {
           <Row className="justify-content-center">
             <Col xs={12} md={8} lg={7}>
               <div className="mb-5">
-                {isNew ? <h2>Add New Task</h2> : <h2>Update Tasks</h2>}
+                {isNew ? <h2>Add New Task</h2> : <h2>Update Task</h2>}
               </div>
               <Form>
                 <INput
@@ -95,9 +96,9 @@ const TaskForm = (props: Props) => {
                   onChange={onChange}
                 />
                 <INput
-                  value={state.date}
-                  name="date"
-                  LabelName="Date"
+                  value={state.duedate}
+                  name="duedate"
+                  LabelName="dueDate"
                   type="date"
                   onChange={onChange}
                 />

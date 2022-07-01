@@ -29,5 +29,4 @@ export const statuses = [
     name: "Pending",
     value: "Pending",
   },
-
 ];

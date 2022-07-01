@@ -14,7 +14,7 @@ const getMeetings = () => {
     return [];
   }
 };
-const MeetingForm = (props: Props) => {
+const Meeting = (props: Props) => {
   const [meetings, setMeetings] = useState(getMeetings());
 
   const deleteMeeting = (id: any) => {
@@ -31,7 +31,7 @@ const MeetingForm = (props: Props) => {
   return (
     <Container fluid>
       <Row>
-        <Col xs={12} md={3} lg={3}>
+        <Col xs={12} md={4} lg={3}>
           <Sidebar />
         </Col>
         <Col className="p-3 py-5" xs={12} md={8} lg={9}>
@@ -50,8 +50,8 @@ const MeetingForm = (props: Props) => {
             </div>
             <div className="mt-5">
               <h3 className="text-center mb-5">List of Meetings</h3>
-              <Table bordered hover className="text-center">
-                <thead >
+              <Table responsive bordered hover className="text-center">
+                <thead>
                   <tr>
                     <th>Sr. No.</th>
                     <th>Title</th>
@@ -74,4 +74,4 @@ const MeetingForm = (props: Props) => {
   );
 };
 
-export default MeetingForm;
+export default Meeting;

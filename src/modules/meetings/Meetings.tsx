@@ -12,11 +12,11 @@ const Meetings = ({ meets, deleteMeeting, editMeeting }: Props) => {
       <td>{meeting.date}</td>
       <td>{meeting.status}</td>
       <td>
-      <button
+        <button
           className="btn delete-btn me-2"
           onClick={() => deleteMeeting(meeting.id)}
         >
-        <Icon.TrashFill />
+          <Icon.TrashFill />
         </button>
       </td>
       <td>

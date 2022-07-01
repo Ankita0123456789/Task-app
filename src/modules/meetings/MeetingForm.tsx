@@ -56,16 +56,18 @@ const MeetingForm = (props: Props) => {
     navigate("/meetings");
   };
 
-  const validated = () =>{
-    if (state.title.length > 0 && 
-    state.title.length <= 14 &&
-    state.description.length > 0 && 
-    state.description.length <= 60&&
-    state.date&&
-    state.status){
-      return true
+  const validated = () => {
+    if (
+      state.title.length > 0 &&
+      state.title.length <= 14 &&
+      state.description.length > 0 &&
+      state.description.length <= 60 &&
+      state.date &&
+      state.status
+    ) {
+      return true;
     }
-  }
+  };
 
   return (
     <Container fluid>

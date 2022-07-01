@@ -9,14 +9,14 @@ const Tasks = ({ tasks, deleteTasks, editTasks }: Props) => {
       <td>{(task.id = Index + 1)}</td>
       <td>{task.title}</td>
       <td>{task.description}</td>
-      <td>{task.date}</td>
+      <td>{task.duedate}</td>
       <td>{task.status}</td>
       <td>
-      <button
+        <button
           className="btn delete-btn me-2"
           onClick={() => deleteTasks(task.id)}
         >
-        <Icon.TrashFill />
+          <Icon.TrashFill />
         </button>
       </td>
       <td>

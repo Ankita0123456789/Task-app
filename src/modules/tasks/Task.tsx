@@ -31,7 +31,7 @@ const Task = (props: Props) => {
   return (
     <Container fluid>
       <Row>
-        <Col xs={12} md={3} lg={3}>
+        <Col xs={12} md={4} lg={3}>
           <Sidebar />
         </Col>
         <Col className="p-3 py-5" xs={12} md={8} lg={9}>
@@ -40,9 +40,7 @@ const Task = (props: Props) => {
               <Link
                 className="btn btn-outline-primary px-5 me-2"
                 to={`/task/${
-                  tasks.length > 0
-                    ? tasks[tasks.length - 1]?.id + 1
-                    : 1
+                  tasks.length > 0 ? tasks[tasks.length - 1]?.id + 1 : 1
                 }`}
               >
                 Add New Task
@@ -50,13 +48,13 @@ const Task = (props: Props) => {
             </div>
             <div className="mt-5">
               <h3 className="text-center mb-5">List of Tasks</h3>
-              <Table bordered hover className="text-center">
-                <thead >
+              <Table bordered hover responsive className="text-center">
+                <thead>
                   <tr>
                     <th>Sr. No.</th>
                     <th>Title</th>
                     <th>Description</th>
-                    <th>Date</th>
+                    <th>DueDate</th>
                     <th>Status</th>
                     <th>Delete</th>
                     <th>Edit</th>
